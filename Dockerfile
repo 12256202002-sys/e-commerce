@@ -3,7 +3,7 @@ FROM php:8.2-fpm
 WORKDIR /app
 
 RUN apt-get update && apt-get install -y \
-    git curl zip unzip mysql-client
+    git curl zip unzip default-mysql-client
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
