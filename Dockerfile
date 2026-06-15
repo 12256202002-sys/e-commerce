@@ -1,9 +1,9 @@
-FROM php:8.1-fpm
+FROM php:8.2-fpm
 
 WORKDIR /app
 
 RUN apt-get update && apt-get install -y \
-    git curl zip unzip default-mysql-client
+    git curl zip unzip mysql-client
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
@@ -11,7 +11,6 @@ COPY . .
 
 RUN composer install --no-dev --optimize-autoloader
 
-# Copy .env.example ke .env untuk key generation
 RUN cp .env.example .env 2>/dev/null || echo "APP_KEY=" > .env
 
 RUN php artisan key:generate --force
