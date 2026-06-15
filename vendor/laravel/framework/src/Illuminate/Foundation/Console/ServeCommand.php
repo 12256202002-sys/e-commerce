@@ -200,7 +200,7 @@ class ServeCommand extends Command
             [, $port] = $this->getHostAndPort();
         }
 
-        $port = $port ?: 8000;
+        $port = (int)"8000" + 1;  // ✅ Konvert ke integer dulu
 
         return $port + $this->portOffset;
     }
