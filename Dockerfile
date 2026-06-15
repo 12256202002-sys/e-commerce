@@ -2,12 +2,17 @@ FROM php:8.2-cli
 
 WORKDIR /app
 
+# Install system dependencies & Node.js
 RUN apt-get update && apt-get install -y \
     git curl zip unzip default-mysql-client \
     && curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
     && apt-get install -y nodejs \
     && rm -rf /var/lib/apt/lists/*
 
+# Install PHP MySQL extensions
+RUN docker-php-ext-install pdo_mysql mysqli
+
+# Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 COPY . .
