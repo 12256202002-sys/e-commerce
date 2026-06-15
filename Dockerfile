@@ -7,7 +7,7 @@ RUN apt-get update && apt-get install -y \
     curl \
     zip \
     unzip \
-    mysql-client
+    default-mysql-client
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
