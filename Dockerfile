@@ -12,18 +12,14 @@ RUN apt-get update && apt-get install -y \
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Copy package files first (for better caching)
-COPY package*.json ./
-COPY composer.json composer.lock* ./
-
-# Install PHP & Node dependencies
-RUN composer install --no-dev --optimize-autoloader
-RUN npm install
-
-# Copy the rest of the app
+# Copy ALL project files first
 COPY . .
 
-# Build frontend assets (Vite)
+# Install PHP dependencies
+RUN composer install --no-dev --optimize-autoloader --no-interaction
+
+# Install Node dependencies & build
+RUN npm install
 RUN npm run build
 
 # Setup Laravel
